@@ -1,14 +1,14 @@
-const Water = require('./worlds/water');
+const Water = require('./areas/water');
 
 class World {
 
-  constructor(size, elements) {
+  constructor(size,elements) {
     this.size = size;
     this.elements = elements;
     this.map = {};
   }
 
-  getAt(x,y){
+  get(x,y){
     return this.map[x+'_'+y];
   }
 
