@@ -1,0 +1,7 @@
+version: '3.4'
+services:
+  world:
+    build: .
+    volumes:
+      - ./game:/usr/src/app
+    command: 'node node_modules/.bin/nodemon index.js'
