@@ -1,6 +1,6 @@
 
 const World = require('./world');
-
+const Fish = require('./animals/fish');
 class Game {
 
   /**
@@ -8,13 +8,10 @@ class Game {
    */
   constructor(){
 
-    this.running = true;
-    this.gameElements = [];
+    this.interval = null;
+    this.elements = [];
     this.cycles = 0;
-
-    this.worldSize = 100;
-
-    this.world = new World(this.worldSize, this.gameElements);
+    this.world = new World(100, this.elements);
 
   }
 
@@ -23,7 +20,9 @@ class Game {
    * @return void
    */
   generateWorld(){
+
     this.world.generate();
+
   }
 
   /**
@@ -31,6 +30,19 @@ class Game {
    * @return void
    */
   generateAnimals(){
+    let area = this.elements[0];
+    let fish1 = new Fish(area);
+    this.elements.push(fish1);
+    this.elements[0].addAnimal(fish1);
+
+    // let fish2 = new Fish;
+    // this.elements.push(fish2);
+
+    // this.elements[0].addAnimal(fish2);
+
+
+    // this.elements[0].removeAnimal(fish2);
+    // console.dir(this.elements[0]);
 
   }
 
@@ -39,9 +51,12 @@ class Game {
    * @return void
    */
   runCycle(){
-    for (var i = 0; i < this.gameElements.length; i++) {
-      this.gameElements[i].step(this);
+    for (var i = 0; i < this.elements.length; i++) {
+      this.elements[i].tick(this);
     }
+    console.clear();
+    // console.dir(this.elements);
+
   }
 
   /**
@@ -53,11 +68,11 @@ class Game {
     this.generateWorld();
     this.generateAnimals();
 
-    let interval = setInterval(() => {
+    this.interval = setInterval(() => {
         this.runCycle();
         this.cycles++;
-        console.clear();
-        console.log(this.cycles);
+        // console.clear();
+        // console.log(this.cycles);
     }, 1000);
 
   }
