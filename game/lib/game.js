@@ -34,12 +34,19 @@ class Game {
     this.generateWorld();
     this.generateAnimals();
 
-    while(this.running){
-      this.runCycle();
-      this.cycles++;
-      console.clear();
-      console.log(this.cycles);
-    }
+    let interval = setInterval(() => {
+        this.runCycle();
+        this.cycles++;
+        console.clear();
+        console.log(this.cycles);
+    }, 1000);
+
+    // while(this.running){
+    //   this.runCycle();
+    //   this.cycles++;
+    //   console.clear();
+    //   console.log(this.cycles);
+    // }
   }
 
 }
