@@ -8,7 +8,7 @@ class Base {
   }
 
   step(Game){
-    console.log("do node something")
+    console.log("do hej something")
   }
 
 }
