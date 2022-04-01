@@ -1,34 +1,53 @@
-const Water = require('./worlds/water');
+
+const World = require('./world');
 
 class Game {
 
+  /**
+   * constructor
+   */
   constructor(){
+
     this.running = true;
     this.gameElements = [];
     this.cycles = 0;
 
     this.worldSize = 100;
 
+    this.world = new World(this.worldSize, this.gameElements);
+
   }
 
+  /**
+   * Generate the world
+   * @return void
+   */
   generateWorld(){
-    for (var x = 0; x < this.worldSize; x++) {
-      for (var y = 0; y < this.worldSize; y++) {
-        this.gameElements.push(new Water({x,y}));
-      }
-    }
+    this.world.generate();
   }
 
+  /**
+   * Generate animals
+   * @return void
+   */
   generateAnimals(){
 
   }
 
+  /**
+   * Run the cycle
+   * @return void
+   */
   runCycle(){
     for (var i = 0; i < this.gameElements.length; i++) {
       this.gameElements[i].step(this);
     }
   }
 
+  /**
+   * Run the game
+   * @return void
+   */
   run(){
 
     this.generateWorld();
@@ -41,12 +60,6 @@ class Game {
         console.log(this.cycles);
     }, 1000);
 
-    // while(this.running){
-    //   this.runCycle();
-    //   this.cycles++;
-    //   console.clear();
-    //   console.log(this.cycles);
-    // }
   }
 
 }
