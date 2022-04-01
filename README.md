@@ -1,5 +1,6 @@
 # WORLD GAME
 
 ### install
+docker-compose up -d
 
-docker-compose run world npm install
+__The nodemon is restarting the program when file are changed__
