@@ -26,7 +26,7 @@ class Base {
   }
 
   notify(event){
-    this.entities.each((entity) => entity.update(event));
+    this.entities.forEach((entity) => entity.update(event));
   }
 
   tick(game){}

@@ -30,19 +30,17 @@ class Game {
    * @return void
    */
   generateAnimals(){
-    // let area = this.elements[0];
-    // let fish1 = new Fish(area);
-    // this.elements.push(fish1);
-    // this.elements[0].addAnimal(fish1);
 
-    // let fish2 = new Fish;
-    // this.elements.push(fish2);
+    for (var i = 0; i < 10; i++) {
 
-    // this.elements[0].addAnimal(fish2);
+      let x = Math.floor(Math.random() * 100);
+      let y = Math.floor(Math.random() * 100);
+      let f = new Fish(this);
+      this.elements.push(f);
+      this.world.get(x,y).add(f);
+      f.move(x,y);
+    }
 
-
-    // this.elements[0].removeAnimal(fish2);
-    // console.dir(this.elements[0]);
 
   }
 
@@ -55,7 +53,6 @@ class Game {
       this.elements[i].tick(this);
     }
     console.clear();
-    // console.dir(this.elements);
 
   }
 
@@ -71,9 +68,7 @@ class Game {
     this.interval = setInterval(() => {
         this.runCycle();
         this.cycles++;
-        // console.clear();
-        // console.log(this.cycles);
-    }, 1000);
+    }, 5000);
 
   }
 
