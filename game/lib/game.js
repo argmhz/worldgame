@@ -30,10 +30,10 @@ class Game {
    * @return void
    */
   generateAnimals(){
-    let area = this.elements[0];
-    let fish1 = new Fish(area);
-    this.elements.push(fish1);
-    this.elements[0].addAnimal(fish1);
+    // let area = this.elements[0];
+    // let fish1 = new Fish(area);
+    // this.elements.push(fish1);
+    // this.elements[0].addAnimal(fish1);
 
     // let fish2 = new Fish;
     // this.elements.push(fish2);
