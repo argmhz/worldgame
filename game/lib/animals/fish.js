@@ -2,17 +2,17 @@ const Base = require('./base');
 
 class Fish extends Base {
 
-  tick(game) {
-
-    let x = this.area.pos.x;
-    let y = this.area.pos.y;
-
-    console.log(x + ' ' + y);
-    let newArea = game.world.get(x+1,y+1);
-    this.setArea(newArea);
-
+  tick() {
+    if(this.tile){
+      let x = this.tile.pos.x;
+      let y = this.tile.pos.y;
+      this.move(x,y+1);
+    }
   }
 
+  update(event){
+    console.dir(event);
+  }
 
 }
 

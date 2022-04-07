@@ -1,19 +1,33 @@
 
 class Base {
 
-  constructor(area){
-    this.area = area;
+  constructor(game){
+    this.game = game;
+    this.life = 10;
+    this.tile = null;
   }
 
-  setArea(area) {
-    if(this.area){
-      this.area.removeAnimal(this);
+  move(x,y){
+
+    if( x <= this.game.world.size ){
+      
     }
 
-    this.area = area;
-    this.area.addAnimal(this);
-  }
+    if(this.tile){
+      this.tile.remove(this);
+    }
 
+    this.tile = this.game.world.get(x,y);
+    this.tile.add(this);
+  }
+  /**
+   * Called when the world around is changing
+   * @param  {JSON} event
+   * @return {void}
+   */
+  update(event){
+
+  }
 }
 
 

@@ -1,21 +1,32 @@
 class Base {
 
   constructor(x,y){
-    this.weather = {};
-    this.animals = [];
-
+    this.entities = [];
     this.pos = {x,y};
   }
 
-  addAnimal(animal){
-    this.animals.push(animal);
+  add(entity){
+    this.notify({
+      type: "entity_added",
+      entity
+    });
+    this.entities.push(entity);
   }
 
-  removeAnimal(animal) {
-    let index = this.animals.indexOf(animal);
+  remove(entity) {
+    let index = this.entities.indexOf(entity);
     if(index != -1){
-        this.animals.splice(index, 1);
+      this.entities.splice(index, 1);
+      this.notify({
+        type: "entity_removed",
+        entity
+      });
     }
+
+  }
+
+  notify(event){
+    this.entities.forEach((entity) => entity.update(event));
   }
 
   tick(game){}
