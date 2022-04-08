@@ -1,4 +1,4 @@
-FROM node:9.1-alpine
+FROM node:alpine
 
 LABEL maintainer="Marz <marz@borsen.dk>"
 

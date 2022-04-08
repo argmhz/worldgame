@@ -2,7 +2,8 @@ class Base {
 
   constructor(x,y){
     this.entities = [];
-    this.pos = {x,y};
+    this.x = x;
+    this.y = y;
   }
 
   add(entity){

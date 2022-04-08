@@ -1,4 +1,4 @@
-const Water = require('./areas/water');
+const Water = require('./tiles/water');
 
 class World {
 
