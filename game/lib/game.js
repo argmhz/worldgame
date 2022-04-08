@@ -10,8 +10,9 @@ class Game {
 
     this.interval = null;
     this.elements = [];
+    this.speed = 500;
     this.cycles = 0;
-    this.world = new World(100, this.elements);
+    this.world = new World(10, this.elements);
 
   }
 
@@ -31,14 +32,14 @@ class Game {
    */
   generateAnimals(){
 
-    for (var i = 0; i < 10; i++) {
-
-      let x = Math.floor(Math.random() * 100);
-      let y = Math.floor(Math.random() * 100);
+    for (var i = 0; i < 1; i++) {
+      let y = Math.floor(Math.random() * this.world.size);
+      let x = Math.floor(Math.random() * this.world.size);
       let f = new Fish(this);
       this.elements.push(f);
-      this.world.get(x,y).add(f);
-      f.move(x,y);
+      var tile = this.world.get(x,y);
+      tile.add(f);
+      f.tile = tile;
     }
 
 
@@ -52,8 +53,20 @@ class Game {
     for (var i = 0; i < this.elements.length; i++) {
       this.elements[i].tick(this);
     }
-    console.clear();
+    this.display();
+  }
 
+  display(){
+    let display = [];
+    for (var y = 0; y < this.world.size; y++) {
+      let col = [];
+      for (var x = 0; x < this.world.size; x++) {
+        col.push(this.world.get(x,y).entities.length);
+      }
+      display.push(col);
+    }
+
+    console.table(display);
   }
 
   /**
@@ -68,7 +81,7 @@ class Game {
     this.interval = setInterval(() => {
         this.runCycle();
         this.cycles++;
-    }, 5000);
+    }, this.speed);
 
   }
 

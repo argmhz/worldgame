@@ -1,17 +1,26 @@
 const Base = require('./base');
+const Direction = require('../direction');
 
 class Fish extends Base {
 
+  load(){
+    this.dir = Direction.random();
+  }
+
   tick() {
-    if(this.tile){
-      let x = this.tile.pos.x;
-      let y = this.tile.pos.y;
-      this.move(x,y+1);
+
+    let n = this.game.cycles % Math.floor(Math.random()*5);
+    if(n == 0){
+      this.dir = Direction.random();
+    }
+
+    if(!this.move(this.dir)){
+      this.dir = Direction.random();
     }
   }
 
   update(event){
-    console.dir(event);
+    console.dir(event.type);
   }
 
 }
