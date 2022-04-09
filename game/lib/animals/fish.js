@@ -5,6 +5,8 @@ class Fish extends Base {
 
   load(){
     this.dir = Direction.random();
+    this.allowedTiles = ['Water'];
+    this.foodTypes = ['Fish'];
   }
 
   tick() {
@@ -17,9 +19,11 @@ class Fish extends Base {
     if(!this.move(this.dir)){
       this.dir = Direction.random();
     }
+    this.seekFood();
   }
 
   update(event){
+
     console.dir(event.type);
   }
 

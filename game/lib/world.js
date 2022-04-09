@@ -9,7 +9,7 @@ class World {
   }
 
   get(x,y){
-    return this.map[x+'_'+y];
+    return this.map[x+'_'+y]?this.map[x+'_'+y]:null;
   }
 
   generate(){

@@ -10,7 +10,7 @@ class Game {
 
     this.interval = null;
     this.elements = [];
-    this.speed = 500;
+    this.speed = 1500;
     this.cycles = 0;
     this.world = new World(10, this.elements);
 
@@ -32,11 +32,12 @@ class Game {
    */
   generateAnimals(){
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 10; i++) {
       let y = Math.floor(Math.random() * this.world.size);
       let x = Math.floor(Math.random() * this.world.size);
       let f = new Fish(this);
       this.elements.push(f);
+
       var tile = this.world.get(x,y);
       tile.add(f);
       f.tile = tile;
@@ -53,7 +54,7 @@ class Game {
     for (var i = 0; i < this.elements.length; i++) {
       this.elements[i].tick(this);
     }
-    this.display();
+    // this.display();
   }
 
   display(){
