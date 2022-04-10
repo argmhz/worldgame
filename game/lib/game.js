@@ -10,7 +10,7 @@ class Game {
 
     this.interval = null;
     this.elements = [];
-    this.speed = 1500;
+    this.speed = 500;
     this.cycles = 0;
     this.world = new World(10, this.elements);
 
@@ -32,7 +32,7 @@ class Game {
    */
   generateAnimals(){
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 2; i++) {
       let y = Math.floor(Math.random() * this.world.size);
       let x = Math.floor(Math.random() * this.world.size);
       let f = new Fish(this);
@@ -42,8 +42,6 @@ class Game {
       tile.add(f);
       f.tile = tile;
     }
-
-
   }
 
   /**
@@ -51,13 +49,14 @@ class Game {
    * @return void
    */
   runCycle(){
-    for (var i = 0; i < this.elements.length; i++) {
-      this.elements[i].tick(this);
-    }
-    // this.display();
+    this.elements.forEach((item, i) => {
+      item.tick(this);
+    });
+    this.display();
   }
 
   display(){
+
     let display = [];
     for (var y = 0; y < this.world.size; y++) {
       let col = [];
@@ -67,7 +66,10 @@ class Game {
       display.push(col);
     }
 
+    process.stdout.write("\u001b[2J\u001b[0;0H\n");
+    console.log("############### WORLD GAME ###############");
     console.table(display);
+    console.log("Animals: " + (this.elements.length - (this.world.size*this.world.size)));
   }
 
   /**

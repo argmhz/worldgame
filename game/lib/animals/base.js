@@ -8,9 +8,10 @@ class Base {
     this.tile = null;
 
     this.life = 0;
+    this.maxLife = 0;
     this.foodTypes = [];
     this.allowedTiles = [];
-
+    this.movement = 0;
 
     this.seekArea = [
       {x:-1,y:-1},{x: 0, y:-1},{x:-1, y:-1},
@@ -23,22 +24,30 @@ class Base {
 
   load(){}
 
+  isHungry(){
+    return this.life < (this.maxLife * .50);
+  }
+
   defend(entity){}
 
-  attack(entity){}
+  attack(entity){
+
+  }
 
   eat(entity){}
 
-  isDead(){}
+  isDead(){
+    return (this.life == 0);
+  }
 
-  seekFood(){
+  seekTiles(callback){
     let x = this.tile.x;
     let y = this.tile.y;
     for (var i = 0; i < this.seekArea.length; i++) {
-      // console.log(this.seekArea[i].x+x);
-      // console.log(this.seekArea[i].y+y);
-      console.dir(this.game.world.get(this.seekArea[i].x+x,this.seekArea[i].y+y));
-      // console.dir();
+      let entity = this.game.world.get(this.seekArea[i].x+x,this.seekArea[i].y+y);
+      if(entity){
+          callback(entity);
+      }
     }
   }
 
@@ -70,14 +79,43 @@ class Base {
     return false;
   }
 
+  seekFood(){
+    let found = null;
+    this.seekTiles((tile) => {
+      tile.entities.forEach((animal, i) => {
+        if(this.foodTypes.includes(animal.getType())){
+          found = animal;
+        }
+      });
+    });
+
+    if(found) {
+      this._moveTo(found.x, found.y);
+      this.attack(found);
+    } else {
+      this.moveAround();
+    }
+  }
+
+  moveAround(){
+    let n = this.game.cycles % Math.floor(Math.random()*5);
+    if(n == 0){
+      this.dir = Direction.random();
+    }
+
+    if(!this.move(this.dir)){
+      this.dir = Direction.random();
+    }
+  }
+
   tick(){
 
-    // if hungry
-      // find and kill and eat
-      // find food and eat
+    if(this.isHungry()){
+      this.seekFood();
+    } else {
+      this.moveAround();
+    }
 
-    // else
-      // find same entity and reproduce
 
   }
 
