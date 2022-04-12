@@ -1,6 +1,7 @@
 
 const World = require('./world');
 const Fish = require('./animals/fish');
+
 class Game {
 
   /**
@@ -21,9 +22,7 @@ class Game {
    * @return void
    */
   generateWorld(){
-
     this.world.generate();
-
   }
 
   /**
@@ -32,15 +31,23 @@ class Game {
    */
   generateAnimals(){
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 10; i++) {
       let y = Math.floor(Math.random() * this.world.size);
       let x = Math.floor(Math.random() * this.world.size);
-      let f = new Fish(this);
+      let f = new Fish(this, i);
       this.elements.push(f);
 
       var tile = this.world.get(x,y);
       tile.add(f);
       f.tile = tile;
+    }
+  }
+
+  remove(entity) {
+    let index = this.elements.indexOf(entity);
+    if(index != -1){
+      this.elements.slice(index, 1);
+      delete this.elements[index];
     }
   }
 
@@ -56,12 +63,14 @@ class Game {
   }
 
   display(){
-
+    let total = 0;
     let display = [];
     for (var y = 0; y < this.world.size; y++) {
       let col = [];
       for (var x = 0; x < this.world.size; x++) {
-        col.push(this.world.get(x,y).entities.length);
+        let i = this.world.get(x,y).entities.length;
+        total += i;
+        col.push(i==0?'':i);
       }
       display.push(col);
     }
@@ -69,7 +78,7 @@ class Game {
     process.stdout.write("\u001b[2J\u001b[0;0H\n");
     console.log("############### WORLD GAME ###############");
     console.table(display);
-    console.log("Animals: " + (this.elements.length - (this.world.size*this.world.size)));
+    console.log("Animals: " + total);
   }
 
   /**

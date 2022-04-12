@@ -7,17 +7,18 @@ class Fish extends Base {
     this.dir = Direction.random();
     this.allowedTiles = ['Water'];
     this.foodTypes = ['Fish'];
-    this.life = 10;
+    this.life = 49;
+    this.strength = 100;
     this.maxLife = 100;
   }
 
   tick() {
+    this.life -= 1;
     super.tick();
   }
 
   update(event){
 
-    console.dir(event.type);
   }
 
 }

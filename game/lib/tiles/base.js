@@ -30,6 +30,11 @@ class Base {
     this.entities.forEach((entity) => entity.update(event));
   }
 
+  getType(){
+    return this.constructor.name;
+  }
+
+
   tick(game){}
 
 }

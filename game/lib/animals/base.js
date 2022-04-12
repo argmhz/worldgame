@@ -3,12 +3,13 @@ const Direction = require('../direction');
 
 class Base {
 
-  constructor(game){
+  constructor(game, id){
     this.game = game;
     this.tile = null;
-
+    this.id = id;
     this.life = 0;
     this.maxLife = 0;
+    this.strength = 0;
     this.foodTypes = [];
     this.allowedTiles = [];
     this.movement = 0;
@@ -28,27 +29,51 @@ class Base {
     return this.life < (this.maxLife * .50);
   }
 
-  defend(entity){}
+  defend(entity){
+    let hit = entity.hit();
 
-  attack(entity){
+    this.life - hit;
+
+    if(this.isDead()){
+      console.log(this.id + " i died ");
+
+      entity.eat(this.maxLife * .2);
+      this.tile.remove(this);
+      this.game.remove(this);
+    }
 
   }
 
-  eat(entity){}
+  hit(){
+    return Math.floor(Math.random()*this.strength)
+  }
+
+  attack(entity){
+    console.log("attack..");
+    entity.defend(this);
+  }
+
+  eat(num){
+    this.life += num;
+    if(this.life > this.maxLife){
+      this.life = this.maxLife;
+    }
+  }
 
   isDead(){
-    return (this.life == 0);
+    return (this.life <= 0);
   }
 
   seekTiles(callback){
     let x = this.tile.x;
     let y = this.tile.y;
-    for (var i = 0; i < this.seekArea.length; i++) {
-      let entity = this.game.world.get(this.seekArea[i].x+x,this.seekArea[i].y+y);
-      if(entity){
+    this.seekArea.forEach((item, i) => {
+      let entity = this.game.world.get(item.x+x,item.y+y);
+      if(entity && entity !== this){
           callback(entity);
       }
-    }
+    });
+
   }
 
   getType(){
@@ -103,9 +128,10 @@ class Base {
       this.dir = Direction.random();
     }
 
-    if(!this.move(this.dir)){
+    while (!this.move(this.dir)) {
       this.dir = Direction.random();
     }
+
   }
 
   tick(){
@@ -115,8 +141,6 @@ class Base {
     } else {
       this.moveAround();
     }
-
-
   }
 
   /**
